@@ -61,6 +61,7 @@ const $ = new Env('羊毛赚');
 let ymzurl = ["http://ymz.iphonezhuan.com/addaction"]
 let ymzhd = [{"Accept":"*/*","Accept-Encoding":"gzip, deflate","Connection":"keep-alive","Content-Type":"application/x-www-form-urlencoded","Host":"ymz.iphonezhuan.com","User-Agent":"%E7%BE%8A%E6%AF%9B%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/1.03 CFNetwork/978.0.7 Darwin/18.7.0","Content-Length":"82","Accept-Language":"zh-tw"}]
 let ymzbody = ["sign=b6201adb70a54a7703b9e0440b391148&channelID=2&taskid=1&type=1&uid=9532&ver=102"]
+let ymzbody1 = ["sign=ed9b68dd1044d31efe3ca7e0396e909b&channelID=2&taskid=2&type=2&uid=9532&ver=102"]
 console.log(`羊毛赚共${ymzurl.length}个账号\n`)
 !(async () => {
 	
