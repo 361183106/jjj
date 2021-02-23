@@ -62,6 +62,7 @@ let ymzurl = ["http://ymz.iphonezhuan.com/addaction"]
 let ymzhd = [{"Accept":"*/*","Accept-Encoding":"gzip, deflate","Connection":"keep-alive","Content-Type":"application/x-www-form-urlencoded","Host":"ymz.iphonezhuan.com","User-Agent":"%E7%BE%8A%E6%AF%9B%E8%8B%B1%E6%B1%89%E8%AF%8D%E5%85%B8/1.03 CFNetwork/978.0.7 Darwin/18.7.0","Content-Length":"82","Accept-Language":"zh-tw"}]
 let ymzbody = ["sign=b6201adb70a54a7703b9e0440b391148&channelID=2&taskid=1&type=1&uid=9532&ver=102"]
 let ymzbody1 = ["sign=ed9b68dd1044d31efe3ca7e0396e909b&channelID=2&taskid=2&type=2&uid=9532&ver=102"]
+let ymztxbody = ["sign=1cf252b8604735eef1df91f51961047a&account=fenghaipeng2011%40sina.cn&cellphone=13602438264&channelID=2&code=650967&money=3&name=%E5%86%AF%E6%B5%B7%E6%9C%8B&timestamp=1614057293061&type=2&uid=9532&ver=102"]
 console.log(`羊毛赚共${ymzurl.length}个账号\n`)
 !(async () => {
 	
@@ -106,6 +107,32 @@ function ymzsp(j) {
 			}
 		})
 	})
+}
+
+//羊毛赚提现    
+function ymztx(timeout = 0) {
+  return new Promise((resolve) => {
+let url = {
+        url : 'http://ymz.iphonezhuan.com/submitwithdraw',
+        headers : ymzhd[j],
+		body : ymztxbody[j],
+      $.post(url, async (err, resp, data) => {
+        try {
+           
+    const result = JSON.parse(data)
+        if(result.statuscode == 200){
+        console.log('羊毛赚提现回执:成功🌝 '+result.msg)
+}
+if(result.statuscode !== 200){
+        console.log('羊毛赚提现回执:失败🚫 '+result.msg)}
+
+        } catch (e) {
+          //$.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+    },timeout)
+  })
 }
 
 //羊毛赚广告
