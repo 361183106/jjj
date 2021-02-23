@@ -1,0 +1,47 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 西红柿看看
+
+on:
+    # push:
+    #     branches:
+    #         - main
+    schedule:
+        - cron: "10 0,2,4,6,8 * * *"
+    workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest       
+    steps:
+      
+      - name: Checkout
+        run: |
+          git clone https://github.com/361183106/jjj.git ~/jjj
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: npm install
+        run: |
+          cd ~/jjj
+          npm install
+          npm install cron
+          npm install request
+          curl ipinfo.io/json
+      - name: '【羊毛赚】'
+        run: |
+          cd ~/jjj   
+          node Task/fqkk.js
+              env:
+                  fqkkurl: ${{ secrets.fqkkurl }}
+                  fqkkhd: ${{ secrets.fqkkhd }}
+                  fqkkcount: ${{ secrets.fqkkcount }}
+                  fqkkxh: ${{ secrets.fqkkxh }}
+                  fqtx: ${{ secrets.fqtx }}
+                  SCKEY: ${{ secrets.SCKEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  EFORK: ${{ secrets.EFORK }}
