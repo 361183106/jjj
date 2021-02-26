@@ -1,11 +1,11 @@
-name: 步步宝2
+name: TT
 
 on:
   workflow_dispatch:
   watch:
     types: started
   schedule:
-    - cron: '0 8-23/2 * * *'
+    - cron: '10 0 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest       
@@ -26,4 +26,4 @@ jobs:
       - name: '运行 【步步宝】'
         run: |
           cd ~/chencc   
-          node Task/BBB2.js
+          node Task/TT.js
