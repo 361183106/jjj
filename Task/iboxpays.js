@@ -1,8 +1,8 @@
 /* ziye 
-github地址 https://github.com/ziye12
+github地址 https://github.com/ziye66666
 TG频道地址  https://t.me/ziyescript
 TG交流群   https://t.me/joinchat/AAAAAE7XHm-q1-7Np-tF3g
-boxjs链接  https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/ziye.boxjs.json
+boxjs链接  https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/ziye.boxjs.json
 转载请备注个名字，谢谢
 
 ⚠️笑谱
@@ -26,154 +26,180 @@ boxjs链接  https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/ziye.
 2.2 优化
 2.3 修复直播问题，采用真实直播id
 2.3 设置LIVE 为61 时  单跑直播
-2.3 修复错误
+2.3 修复错误，修复直播收益显示
+2.4 修复金蛋问题，增加视频收益统计，增加上限判定，达到上限以及19点后不执行视频，
+2.4 直播限制为30  设置LIVE为0 不跑直播，1跑直播和视频，2单跑直播
+2.5 增加首次视频验证，灰号直接停止视频
+2.6 修复判定错误,增加surge获取token重写
+2.7 增加红包雨，设置LIVE等于3 开启
+2.7-2 调整红包雨运行机制
+2.8 修复无人直播出现的错误
+2.8-2 修复红包雨结束报错
+2.8-3 增加通过验证码获取token功能，并且内置header，新人设置LIVE为888
+2.8-4 修复错误
+2.10 修复红包雨问题，LIVE设置3  启动红包雨活动，修复版本问题
+2.10-2 移除红包雨模块
+2.11 移除视频时间限制，LIVE设置666做新人180秒任务
+2.26 适配直播上限20次
 
-⚠️一共2个位置 2个ck  👉 3条 Secrets 
+⚠️一共1个位置 1个ck  👉 5条 Secrets 
 多账号换行
+
+
+⚠️方法一
+
+第一步 进入笑谱 选择手机号登陆，输入手机号，点击获取验证码
+
+第二步 ⚠️进入boxjs（其他平台则输入对应环境变量）  输入当前账号序号   输入手机号  和  验证码
+
+第三步 运行js  手机则自动获取token（其他平台则复制token，填写环境变量）  然后回到boxjs 修改验证码为0
+
+
+已全部操作完成
+
+
+⚠️方法二
 
 第一步 添加  hostname=veishop.iboxpay.com,
 
-第二步 添加笑谱获取更新TOKEN重写  
+第二步 ⚠️添加笑谱获取更新TOKEN重写  
 
-登录  获取更新TOKEN重写 
+登录笑谱(在登录状态就退出，重新登录)  获取更新TOKEN
 
-第三步 添加笑谱获取header重写
 
-点击 我的 获取header
 
-iboxpayheaderVal 👉XP_iboxpayHEADER
 refreshtokenVal 👉XP_refreshTOKEN
 
-设置直播次数 可设置 0到60  0关闭
-LIVE  👉  XP_live
+设置任务 可设置 0 1 2    0开视频关直播 1开视频开直播 2关视频开直播
+ LIVE  👉  XP_live
 
 设置提现金额 可设置 0 1 15 30 50 100  默认0关闭
 CASH  👉  XP_CASH
 
+设置手机号 
+ phone  👉  XP_phone
+
+设置验证码   默认0关闭获取token功能
+sms  👉  XP_sms
+
 ⚠️主机名以及重写👇
 
-（圈x可以获取refreshTOKEN     其他开启抓包，然后登录笑谱，找到 https://veishop.iboxpay.com/nf_gateway/nf-user-auth-web/ignore_tk/veishop/v1/ 里的响应体 refreshTOKEN）
+（手机可以获取refreshTOKEN     其他开启抓包，然后登录笑谱，找到 https://veishop.iboxpay.com/nf_gateway/nf-user-auth-web/ignore_tk/veishop/v1/ 里的响应体 refreshTOKEN）
 
 hostname=veishop.iboxpay.com
 
 ############## 圈x
-#笑谱获取header
-https:\/\/veishop\.iboxpay\.com\/* url script-request-header https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/iboxpay.js
+
 #笑谱获取更新TOKEN
-https:\/\/veishop\.iboxpay\.com\/nf_gateway\/nf-user-auth-web\/ignore_tk\/veishop\/v1\/* url script-response-body https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/iboxpay.js
+https:\/\/veishop\.iboxpay\.com\/nf_gateway\/nf-user-auth-web\/ignore_tk\/veishop\/v1\/* url script-response-body https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/iboxpay.js
 
 ############## loon
-#笑谱获取header
-http-request https:\/\/veishop\.iboxpay\.com\/* script-path=https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/iboxpay.js, requires-header=true, tag=笑谱获取header
+http-response https:\/\/veishop\.iboxpay\.com\/nf_gateway\/nf-user-auth-web\/ignore_tk\/veishop\/v1\/* script-path=https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/iboxpay.js, requires-body=1,max-size=0, tag=笑普token
 
 ############## surge
-#笑谱获取header
-笑谱获取header = type=http-request,pattern=https:\/\/veishop\.iboxpay\.com\/*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/iboxpay.js, script-update-interval=0
+
+#笑谱获取更新TOKEN
+笑谱获取更新TOKEN = type=http-response,pattern=https:\/\/veishop\.iboxpay\.com\/nf_gateway\/nf-user-auth-web\/ignore_tk\/veishop\/v1\/*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/iboxpay.js
+
+
 
 */
 const $ = Env("笑谱");
 $.idx = ($.idx = ($.getval('iboxpaySuffix') || '1') - 1) > 0 ? ($.idx + 1 + '') : ''; // 账号扩展字符
-const CS = 6
- 
-let liveIdcd = [],
-    LIVE=1,
-    logs=0,
-    spid=[],
-    zbid=[],
-	hbyid=[],
-    liveId=[[],[]],
-    CASH=[],
-	LiveTime=[];
+const notify = $.isNode() ? require("./sendNotify") : ``;
+const COOKIE = $.isNode() ? require("./iboxpayCOOKIE") : ``;
+const logs = 0; // 0为关闭日志，1为开启
+const notifyttt = 1 // 0为关闭外部推送，1为12 23 点外部推送
+const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点通知  ， 3为 6 12 18 23 点通知 
+const CS = 5
+$.message = '', COOKIES_SPLIT = '', CASH = '', LIVE = '', phone = '', sms = '', ddtime = '', spid = '', TOKEN = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', zbid = '', cashcs = '', newcashcs = '', liveId = '';
+let livecs = 0,
+    videoscs = 0,
+    LIVES = 0,
+    HBY = 0,
+    liveIdcd = 0;
 RT = 30000;
-//const iboxpayheaderArr = [];
-let iboxpayheaderVal = ``;
-let middleiboxpayHEADER = [];
 const refreshtokenArr = [];
 let refreshtokenVal = ``;
 let middlerefreshTOKEN = [];
+if ($.isNode()) {
+    // 没有设置 XP_CASH 则默认为 0 不提现
+    CASH = process.env.XP_CASH || 0;
+    // 没有设置 XP_live 则默认0
+    LIVE = process.env.XP_live || 0;
+    // 没有设置 XP_phone 则默认为 0 
+    phone = process.env.XP_phone || 0;
+    // 没有设置 XP_sms 则默认0  不获取TOKEN
+    sms = process.env.XP_sms || 0
 
-let TOKEN = [];
+}
+if ($.isNode() && process.env.XP_refreshTOKEN) {
+    COOKIES_SPLIT = process.env.COOKIES_SPLIT || "\n";
+    console.log(
+        `============ cookies分隔符为：${JSON.stringify(
+      COOKIES_SPLIT
+    )} =============\n`
+    );
+    if (
+        process.env.XP_refreshTOKEN &&
+        process.env.XP_refreshTOKEN.indexOf(COOKIES_SPLIT) > -1
+    ) {
+        middlerefreshTOKEN = process.env.XP_refreshTOKEN.split(COOKIES_SPLIT);
+    } else {
+        middlerefreshTOKEN = process.env.XP_refreshTOKEN.split();
+    }
+}
+if (COOKIE.refreshtokenVal) {
+    XP_COOKIES = {
 
-
-
-
-
-
-
-
-iboxpayheaderArr=
-[{
-    "Accept":"*/*",
-    "Accept-Encoding":"gzip, deflate, br",
-    "Accept-Language":"zh-Hans;q=1, en;q=0.9",
-    "Connection":"keep-alive",
-    //"Content-Length":"86",
-    "Content-Type":"application/json; charset=utf-8",
-    "Host":"veishop.iboxpay.com",
-    "User-Agent":"okhttp/3.14.9",
-    "X-User-Agent":"Veishop,1.4.4(android,7.1.2,zh,Android,vmos,6f0b88e863d1e39f)",
-    "mchtNo":"100529600058887",
-    //"random":"97C2C587-06AE-41D9-A953-D890534CA436",
-    "shopkeeperId":"1148855820752977920",
-    //"signature":"7186A026207759CAE3E4930922E0AF6913C1E53B2E149C48C357389BF9975D99",
-    "source":"VEISHOP_APP_IOS",
-    //"timestamp":"1613557461907",
-    "token":"4a9911ade3bf4be4a4209c4c29ac7382",
-    "traceid":"213488282166377103361612675750001fiqIaaAfVZ3q",
-    "version":"1.4.8"
-},
-{
-    "Accept":"*/*",
-    "Accept-Encoding":"gzip, deflate, br",
-    "Accept-Language":"zh-Hans;q=1, en;q=0.9",
-    "Connection":"keep-alive",
-    //"Content-Length":"86",
-    "Content-Type":"application/json; charset=utf-8",
-    "Host":"veishop.iboxpay.com",
-    "User-Agent":"okhttp/3.14.9",
-    "X-User-Agent":"Veishop,1.4.4(android,7.1.2,zh,Android,vmos,6f0b88e863d1e39f)",
-    "mchtNo":"100529600058887",
-    //"random":"97C2C587-06AE-41D9-A953-D890534CA436",
-    "shopkeeperId":"1148855820752977920",
-    //"signature":"7186A026207759CAE3E4930922E0AF6913C1E53B2E149C48C357389BF9975D99",
-    "source":"VEISHOP_APP_IOS",
-    //"timestamp":"1613557461907",
-    "token":"3ae838dd16d841f299f02bde2f7facf9",
-    "traceid":"213488258711998218241611726075146VZ3qfiqI7J36",
-    "version":"1.4.8"
-},
-{
-    "Accept":"*/*",
-    "Accept-Encoding":"gzip, deflate, br",
-    "Accept-Language":"zh-Hans;q=1, en;q=0.9",
-    "Connection":"keep-alive",
-    //"Content-Length":"86",
-    "Content-Type":"application/json; charset=utf-8",
-    "Host":"veishop.iboxpay.com",
-    "User-Agent":"okhttp/3.14.9",
-    "X-User-Agent":"Veishop,1.4.8(android,7.1.2,zh,Android,vmos,ac7494193f95ae6)",
-    "mchtNo":"100529600058887",
-    //"random":"97C2C587-06AE-41D9-A953-D890534CA436",
-    "shopkeeperId":"1148855820752977920",
-    //"signature":"7186A026207759CAE3E4930922E0AF6913C1E53B2E149C48C357389BF9975D99",
-    "source":"VEISHOP_APP_IOS",
-    //"timestamp":"1613557461907",
-    "token":"207ae2158fb44112811026a256134668",
-    "traceid":"213576069086334689281613717987464fiqIaaAfVZ3q",
-    "version":"1.4.8"
-}]
-
- Length =iboxpayheaderArr.length
+        "refreshtokenVal": COOKIE.refreshtokenVal.split('\n'),
+    }
+    Length = XP_COOKIES.refreshtokenVal.length;
+}
+if (!COOKIE.refreshtokenVal) {
+    if ($.isNode()) {
+        Object.keys(middlerefreshTOKEN).forEach((item) => {
+            if (middlerefreshTOKEN[item]) {
+                refreshtokenArr.push(middlerefreshTOKEN[item]);
+            }
+        });
+    } else {
+        refreshtokenArr.push($.getdata("refreshtoken"));
+        // 根据boxjs中设置的额外账号数，添加存在的账号数据进行任务处理
+        if ("iboxpayCASH") {
+            CASH = $.getval("iboxpayCASH") || '0';
+        }
+        if ("iboxpayLIVE") {
+            LIVE = $.getval("iboxpayLIVE") || '0';
+        }
+        if ("iboxpayphone") {
+            phone = $.getval("iboxpayphone") || '0';
+        }
+        if ("iboxpaysms") {
+            sms = $.getval("iboxpaysms") || '0';
+        }
+        let iboxpayCount = ($.getval('iboxpayCount') || '1') - 0;
+        for (let i = 2; i <= iboxpayCount; i++) {
+            if ($.getdata(`refreshtoken${i}`)) {
+                refreshtokenArr.push($.getdata(`refreshtoken${i}`));
+            }
+        }
+    }
+    Length = refreshtokenArr.length
+}
 
 
+function GetCookie() {
+    if ($request && $request.url.indexOf("nf-user-auth-web") >= 0) {
+        const refreshtokenVal = JSON.parse($response.body).data.refreshToken
+        $.setdata(refreshtokenVal, "refreshtoken" + $.idx);
+        $.log(
+            `[${$.name + $.idx}] 获取refreshtoken✅: 成功,refreshtokenVal: ${refreshtokenVal}`
+        );
+        $.msg($.name + $.idx, `获取refreshtoken: 成功🎉`, ``);
+    }
 
-
-refreshTokenID=['b8fd246bace441408f95e493bb0af0d3','130542f0a22b4a049118273ac5f9e6ed','84f3f1979fb143d79472cbabbca3650e']
-
-
-
-
-
+}
 console.log(
     `================== 脚本执行 - 北京时间(UTC+8)：${new Date(
     new Date().getTime() +
@@ -184,7 +210,19 @@ console.log(
 console.log(
     `============ 共 ${Length} 个${$.name}账号=============\n`
 );
-
+console.log(`============ 提现标准为：${CASH} =============\n`);
+if (LIVE == 0) {
+    console.log(`============ 看直播关闭，看视频开启 =============\n`);
+}
+if (LIVE == 1) {
+    console.log(`============ 看直播开启，看视频开启 =============\n`);
+}
+if (LIVE == 2) {
+    console.log(`============ 看直播开启，看视频关闭 =============\n`);
+}
+if (sms >= 1) {
+    console.log(`============ TOKEN获取开启 =============\n`);
+}
 //时间
 nowTimes = new Date(
     new Date().getTime() +
@@ -192,9 +230,9 @@ nowTimes = new Date(
     8 * 60 * 60 * 1000
 );
 //今天
-Y = nowTimes.getFullYear() + '年';
-M = (nowTimes.getMonth() + 1 < 10 ? '0' + (nowTimes.getMonth() + 1) : nowTimes.getMonth() + 1) + '月';
-D = nowTimes.getDate()+ '日';
+Y = nowTimes.getFullYear() + '-';
+M = (nowTimes.getMonth() + 1 < 10 ? '0' + (nowTimes.getMonth() + 1) : nowTimes.getMonth() + 1) + '-';
+D = (nowTimes.getDate() < 10 ? '0' + (nowTimes.getDate()) : nowTimes.getDate());
 ddtime = Y + M + D;
 console.log(ddtime)
 //当前时间戳
@@ -226,7 +264,9 @@ function daytime(inputTime) {
 };
 //时间戳格式化日期
 function time(inputTime) {
-    var date = new Date(inputTime);
+    if ($.isNode()) {
+        var date = new Date(inputTime + 8 * 60 * 60 * 1000);
+    } else var date = new Date(inputTime);
     Y = date.getFullYear() + '-';
     M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() + ' ';
@@ -235,18 +275,54 @@ function time(inputTime) {
     s = date.getSeconds();
     return Y + M + D + h + m + s;
 };
+//随机udid 大写
+function udid() {
+    var s = [];
+    var hexDigits = "0123456789ABCDEF";
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "-";
+    var uuid = s.join("");
+    return uuid;
+}
+//随机udid 小写
+function udid2() {
+    function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+//编码
+function encodeUnicode(str) {
+    var res = [];
+    for (var i = 0; i < str.length; i++) {
+        res[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
+    }
+    return "\\u" + res.join("\\u");
+}
+//解码
+function decodeUnicode(str) {
+    str = str.replace(/\\/g, "%");
+    return unescape(str);
+}
 
 
-for (let i = 0; i < Length; i++) {    
-       LiveTime[i]=0;
- }
+let isGetCookie = typeof $request !== 'undefined'
+if (isGetCookie) {
+    GetCookie()
+    $.done();
+} else {
     !(async () => {
-       // while(true)
-       // {
-            await all(); 
-
-       // }
-       
+        if (sms >= 1) {
+            await getTOKEN();
+        } else await all();
+        if (HBY == 1) {
+            await $.wait(500)
+        }
+        await msgShow();
     })()
     .catch((e) => {
             $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -254,145 +330,87 @@ for (let i = 0; i < Length; i++) {
         .finally(() => {
             $.done();
         })
-
+}
 async function all() {
-
-    
-     
-    for (let i = 0; i < Length; i++) {    
-        await refreshtoken(i);  //更新TOKEN 
+    if (!Length) {
+        $.msg(
+            $.name,
+            '提示：⚠️请点击前往获取https://apps.apple.com/cn/app/%E7%AC%91%E8%B0%B1/id1487075970\n',
+            'https://apps.apple.com/cn/app/%E7%AC%91%E8%B0%B1/id1487075970', {
+                "open-url": "https://apps.apple.com/cn/app/%E7%AC%91%E8%B0%B1/id1487075970"
+            }
+        );
+        return;
     }
-        
-    for (let i = 0; i < Length; i++) {   
-        await user(i);
-        await goldcoin(i); //金币信息
-        await coin(i); //账户信息
-        await withdraw(i); //提现
-        await sylist(i); //收益列表
-		
+    for (let i = 0; i < Length; i++) {
 
-    }
-	await hdid(0); //活动id
-    await liveslist(0); //直播节目表
-    for (let j = 0; j < liveIdcd[0]; j++) {
-        await lives(j); //看直播
-    }
-	await $.wait(30000);
-	await queryvideoPublishId(0)//视频列表
-	for (let i = 0; i < Length; i++) {  
-		await play(i) //看视频
-	    await video(i);
-    }
-}
+        if (COOKIE.refreshtokenVal) {
+
+            refreshtokenVal = XP_COOKIES.refreshtokenVal[i];
+        }
+        if (!COOKIE.refreshtokenVal) {
+
+            refreshtokenVal = refreshtokenArr[i];
+        }
 
 
-
-//红包雨请求  
-function hbyqq(i) {
-    return new Promise((resolve) => {
-       // setTimeout(() => {
-           iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
         O = (`${$.name + (i + 1)}🔔`);
-                header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
-            do playTime = Math.floor(Math.random() * 31);
-            while (playTime < 20)
-            do playTimess = Math.floor(Math.random() * 36);
-            while (playTimess < 30)
-            do playid = Math.floor(Math.random() * 4960000000000000);
-            while (playid < 1000000000000000)
-            hbyqqbodyVal = `{"videoPublishId":"135${playid}","playTimeLenght":${playTime},"type":1,"videoTime":${playTimess}}`;
-            let url = {
-                url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/video/ignore_tk/v1/video_channel/uplaod_play_video_recode.json`,
-                headers: JSON.parse(header),
-                body: hbyqqbodyVal,
+        await console.log(`-------------------------\n\n🔔开始运行【${$.name+(i+1)}】`)
+
+        await refreshtoken(); //更新TOKEN       
+        let cookie_is_live = await user(i + 1); //用户名
+        if (!cookie_is_live) {
+            continue;
+        }
+        await hdid(); //活动id
+        await goldcoin(); //金币信息
+        await coin(); //账户信息
+        await sylist(); //收益列表
+        await splimit(); //视频上限
+        await newcashlist(); //提现查询
+        await cashlist(); //今日提现查询
+        if (!cashcs.amount && CASH >= 1 && $.coin.data.balance / 100 >= CASH) {
+            await withdraw(); //提现
+        }
+
+        if (LIVE >= 1 && nowTimes.getHours() >= 8 && nowTimes.getHours() <= 23 && $.sylist.resultCode && livecs < 20) {
+            await liveslist(); //直播节目表
+            if (liveIdcd >= 1) {
+                dd = liveIdcd * 35 - 34
+                console.log(`📍本次直播运行需要${dd}秒` + '\n')
+
+                await lives(); //看直播
+                await $.wait(dd * 1000)
+            }
+        }
+
+        if (LIVE != 2 && $.splimit.data.isUperLimit == false || LIVE == 888) {
+
+            await playo(); //播放o       
+            await videoo(); //视频o
+
+            if (LIVES != 2) {
+                await $.wait(30000)
+                tt = CS * 30 - 29
+                console.log(`📍本次视频运行需要${tt}秒` + '\n')
+                await play(); //播放       
+                await video(); //视频
+                await $.wait(tt * 1000)
+                if (LIVE == 666) {
+                    await newvideo(); //新人福利
+                }
+                if ($.video.data && $.video.data.goldCoinNumber != 0 && videoPublishId6) {
+                    await goldvideo(); //金蛋视频
+                }
+
 
             }
-            $.post(url, async (err, resp, data) => {
-                try {
-                    if (logs) $.log(`${O}, 红包雨请求🚩: ${data}`);
-                    $.hbyqq = JSON.parse(data);
-                    if ($.hbyqq.resultCode == 1) {
-                        console.log('红包雨请求：成功\n')
-                        $.message += '【红包雨请求】：成功\n';
-                    }
-                } catch (e) {
-                    $.logErr(e, resp);
-                } finally {
-                    resolve()
-                }
-            })
-     //   }, timeout)
-    })
+
+        }
+
+
+    }
 }
-
-
-//红包雨领取  
-function hbylq(i) {
-    return new Promise((resolve) => {
-       // setTimeout(() => {
-
-            hbylqbodyVal = `{
- "actId": "319"
-}`
-            let url = {
-                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_redbag_by_redbag_rain.json`,
-                headers: {
-    "Connection": "keep-alive",
-    "Accept-Encoding": "gzip, deflate, br",
-    "version": "1.4.8",
-    "timestamp": "1612931484515",
-    "mchtNo": "100529600058887",
-    "Content-Type": "application/json; charset=utf-8",
-    "source": "VEISHOP_APP_IOS",
-    "shopkeeperId": "1148855820752977920",
-    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.3, zh_CN, Apple, iPhone, 95872F01-6A5D-4391-BEFD-88981ECC2ED8)",
-    "signature": "95872F01-6A5D-4391-BEFD-88981ECC2ED8",
-    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.3, zh_CN, Apple, iPhone, 95872F01-6A5D-4391-BEFD-88981ECC2ED8)",
-    "token": "9fd266f9fb104960b3b68f1a7e17a16e",
-    "traceid": "313504258621921607681612929655144a4b82bfa26fc",
-    "Host": "veishop.iboxpay.com",
-    "Accept-Language": "zh-Hans-CN;q=1, zh-Hant-HK;q=0.9, hi-CN;q=0.8, en-CN;q=0.7",
-    "Accept": "*/*",
-    "random": "D62C4C8E-72BE-40FE-A0D7-BC735855B157"
-},
-                body: hbylqbodyVal,
-            }
-            $.post(url, async (err, resp, data) => {
-                try {
-					//$.log(data);
-                    if (logs) $.log(`${O}, 红包雨领取🚩: ${data}`);
-                    $.hbylq = JSON.parse(data);
-                    if ($.hbylq.resultCode == 1 && $.hbylq.data.goldCoinAmt != 0) {
-                        console.log(`${O} 红包雨领取：本次领取 ${$.hbylq.data.goldCoinAmt}金币,预估金额${$.hbylq.data.goldCoinAmt / 10000} 元\n`)
-                        $.message += `【${O} 红包雨领取】：本次领取 ${$.hbylq.data.goldCoinAmt}金币,预估金额${$.hbylq.data.goldCoinAmt / 10000} 元\n`
-
-                    }
-                    if ($.hbylq.resultCode == 1 && $.hbylq.data.goldCoinAmt == 0) {
-                        console.log(`${O} 红包雨领取：${$.hbylq.data.redbagDesc}\n`)
-                        $.message += `【${O} 红包雨领取】：${$.hbylq.data.redbagDesc}\n`;
-                    }
-                    if ($.hbylq.resultCode == 0) {
-                        console.log(`${O} 红包雨领取：${$.hbylq.errorDesc}\n`);
-                        $.message += `【${O} 红包雨领取】：${$.hbylq.errorDesc}\n`;
-                    }
-                } catch (e) {
-                    $.logErr(e, resp);
-                } finally {
-                    resolve()
-                }
-            })
-     //   }, timeout)
-    })
-}
-
-
-
-
-
 //通知
 function msgShow() {
     return new Promise(async resolve => {
@@ -414,64 +432,131 @@ function msgShow() {
     })
 }
 
-function cktime() {
-    $.message += '【CK获取时间】：' + time(Number(oldtime)) + '\n'
-};
-//TOKEN更新  
-function refreshtoken(i) {
+
+//TOKEN获取  
+function getTOKEN(timeout = 0) {
     return new Promise((resolve) => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-        header = JSON.stringify(iboxpayheaderVal).replace(`${oldtime}`, `${tts()}`)
-        refreshtokenbodyVal = `{"refreshToken":"${refreshtokenVal}","source":"VEISHOP_APP_IOS"}`
-        let url = {
-            url: `https://veishop.iboxpay.com/nf_gateway/nf_user_auth_web/uc/ignore_tk/v1/refresh_access_token_to_c.json`,
-            headers: JSON.parse(header),
-            body: refreshtokenbodyVal,
-        }
-        $.post(url, async (err, resp, data) => {
-            try {
-                if (logs) $.log(`${O}, TOKEN更新🚩: ${data}`);
-                 $.refreshtoken = JSON.parse(data);
-                if ($.refreshtoken.resultCode == 1) {
-                    TOKEN[i] = $.refreshtoken.data.accessToken
-                    console.log(`【${$.name+(i+1)}】更新TOKEN成功:` + TOKEN[i] );
-                        
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
+        setTimeout(() => {
+
+            getTOKENbodyVal = `{"userPhone":"${phone}","smsCode":"${sms}","source":"VEISHOP_APP_IOS"}`
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf-user-auth-web/ignore_tk/veishop/v1/app_register_by_phone.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: getTOKENbodyVal,
             }
-        })
+            $.post(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, TOKEN获取🚩: ${data}`);
+                    $.getTOKEN = JSON.parse(data);
+                    if ($.getTOKEN.resultCode == 1) {
+                        const refreshtokenVal = $.getTOKEN.data.refreshToken
+                        $.setdata(refreshtokenVal, "refreshtoken" + $.idx);
+                        $.log(
+                            `[${$.name + $.idx}] 获取refreshtoken✅: 成功,refreshtokenVal: ${refreshtokenVal}`
+                        );
+                        $.msg($.name + $.idx, `获取refreshtoken: 成功🎉`, ``);
+                        $.message += '【TOKEN获取】：成功' + $.getTOKEN.data.refreshToken + '\n';
+                    }
+                    if ($.getTOKEN.resultCode == 0) {
+                        console.log(`TOKEN获取：${$.getTOKEN.errorCode}\n`);
+                        $.message += `【TOKEN获取】：${$.getTOKEN.errorCode}\n`;
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//TOKEN更新  
+function refreshtoken(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
+            refreshtokenbodyVal = `{"refreshToken":"${refreshtokenVal}","source":"VEISHOP_APP_IOS"}`
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_user_auth_web/uc/ignore_tk/v1/refresh_access_token_to_c.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: refreshtokenbodyVal,
+            }
+            $.post(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, TOKEN更新🚩: ${data}`);
+                    $.refreshtoken = JSON.parse(data);
+                    if ($.refreshtoken.resultCode == 1) {
+                        TOKEN = $.refreshtoken.data.accessToken
+                        console.log('更新TOKEN成功:' + TOKEN + '\n');
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
     })
 }
 //用户名
-function user(i) {
+function user(timeout = 0) {
     return new Promise((resolve) => {
-   //     setTimeout(() => {
-    iboxpayheaderVal = iboxpayheaderArr[i];
-    refreshtokenVal = refreshTokenID[i];
-    traceid = iboxpayheaderVal["traceid"];
-    token = iboxpayheaderVal["token"];
-    oldtime = traceid.substr(traceid.indexOf("161"), 13);
-    O = (`${$.name + (i + 1)}🔔`);
-            header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
             let url = {
                 url: `https://veishop.iboxpay.com/nf_gateway/nf_user_center_web/shopkeeper/v1/get_context_info.json`,
-                headers: JSON.parse(header),
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
                     if (logs) $.log(`${O}, 用户名🚩: ${data}`);
                     $.user = JSON.parse(data);
                     if ($.user.resultCode == 1) {
-                      
-                        console.log(`========== 【${$.user.data.customerInfo.nickname}】 ==========`);
+                        $.message += `\n${O}`;
+                        $.message += `\n========== 【${$.user.data.customerInfo.nickname}】 ==========\n`;
                         resolve(true);
                     }
 
@@ -488,253 +573,510 @@ function user(i) {
                     resolve()
                 }
             })
-    //    }, timeout)
+        }, timeout)
     })
 }
 //金币信息  
-function goldcoin(i) {
+function goldcoin(timeout = 0) {
     return new Promise((resolve) => {
-      //  setTimeout(() => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-                header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
             let url = {
                 url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/balance.json?source=WX_APP_KA_HTZP`,
-                headers: JSON.parse(header),
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
-					//$.log(data);
                     if (logs) $.log(`${O}, 金币信息🚩: ${data}`);
                     $.goldcoin = JSON.parse(data);
-                    console.log('【金币信息】今日金币' + $.goldcoin.data.coinSum + ',预估金额' + $.goldcoin.data.balanceSum / 100 + '元');
+                    $.message += '【金币信息】：今日金币' + $.goldcoin.data.coinSum + ',预估金额' + $.goldcoin.data.balanceSum / 100 + '元\n';
                 } catch (e) {
                     $.logErr(e, resp);
                 } finally {
                     resolve()
                 }
             })
-     //   }, timeout)
+        }, timeout)
     })
 }
 //活动id 
-function hdid(i) {
+function hdid(timeout = 0) {
     return new Promise((resolve) => {
-       // setTimeout(() => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-            header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
             let url = {
                 url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/ignore_tk/v1/query_act_list.json?source=WX_APP_KA_HTZP`,
-                headers: JSON.parse(header),
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
                     if (logs) $.log(`${O}, 活动id🚩: ${data}`);
                     $.hdid = JSON.parse(data);
                     if ($.hdid.resultCode == 1) {
-                        spid[i] = $.hdid.data.everyDayActivityList.find(item => item.actTypeId === 9)
-                        zbid[i] = $.hdid.data.everyDayActivityList.find(item => item.actTypeId === 10)
-						hbyid[i] = $.hdid.data.everyDayActivityList.find(item => item.actTypeId === 11)
-                        console.log('【' + spid[i].actName + 'ID】：' + spid[i].actId)
-                        console.log('【' + zbid[i].actName + 'ID】：' + zbid[i].actId) ;
-						console.log('【' + hbyid[i].actName + 'ID】：' + hbyid[i].actId) ;
-						
+                        spid = $.hdid.data.everyDayActivityList.find(item => item.actTypeId === 9)
+                        zbid = $.hdid.data.everyDayActivityList.find(item => item.actTypeId === 10)
+                        console.log(spid.actName + 'ID：' + spid.actId + '\n' +
+                            zbid.actName + 'ID：' + zbid.actId + '\n');
+                        $.message += '【' + spid.actName + 'ID】：' + spid.actId + '\n' +
+                            '【' + zbid.actName + 'ID】：' + zbid.actId + '\n';
                     }
+
                 } catch (e) {
                     $.logErr(e, resp);
                 } finally {
                     resolve()
                 }
             })
-        //}, timeout)
+        }, timeout)
     })
 }
+
 //账户信息  
-function coin(i) {
+function coin(timeout = 0) {
     return new Promise((resolve) => {
-        //setTimeout(() => {
-            iboxpayheaderVal = iboxpayheaderArr[i];
-            refreshtokenVal = refreshTokenID[i];
-            traceid = iboxpayheaderVal["traceid"];
-            token = iboxpayheaderVal["token"];
-            oldtime = traceid.substr(traceid.indexOf("161"), 13);
-            O = (`${$.name + (i + 1)}🔔`);
-            header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
             let url = {
                 url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/withdraw_detail.json?source=WX_APP_KA_HTZP`,
-                headers: JSON.parse(header),
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
                     if (logs) $.log(`${O}, 账户信息🚩: ${data}`);
                     $.coin = JSON.parse(data);
-					
-                    $.log('【账户信息】可提余额' + $.coin.data.balance / 100 + ',明日入账' + $.coin.data.tomorrowAmt / 100 + '元');
-					if($.coin.data.balance / 100>=30)
-						CASH[i]=30;	
-					else if($.coin.data.balance / 100>=15)
-						CASH[i]=15;	
-					else 
-						CASH[i]=1;	
-					
+                    $.message += '【账户信息】：明日入账' + $.coin.data.tomorrowAmt / 100 + '元,可提余额' + $.coin.data.balance / 100 + '元\n';
                 } catch (e) {
                     $.logErr(e, resp);
                 } finally {
                     resolve()
                 }
             })
-       // }, timeout)
+        }, timeout)
     })
 }
-
-
-
-
-
-//视频id 
-function queryvideoPublishId(i) {
+//播放o
+function playo(timeout = 0) {
     return new Promise((resolve) => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-            header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
+
+            do playTime = Math.floor(Math.random() * 31);
+            while (playTime < 20)
+            do playTimess = Math.floor(Math.random() * 36);
+            while (playTimess < 30)
+            do playid = Math.floor(Math.random() * 49600000000000000);
+            while (playid < 10000000000000000)
+            playbodyVal = `{"videoPublishId":"13${playid}","playTimeLenght":${playTime},"type":1,"videoTime":${playTimess}}`;
+            videoPublishId = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+            console.log(`视频ID1📍${videoPublishId}`)
             let url = {
-                url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/video/ignore_tk/v1/video_channel/query_video_list.json?current=1&returnCount=0&size=1`,
-                headers: JSON.parse(header),
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/video/ignore_tk/v1/video_channel/uplaod_play_video_recode.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: playbodyVal,
             }
-            $.get(url, async (err, resp, data) => {
+            $.post(url, async (err, resp, data) => {
                 try {
-                    if (logs) $.log(`${O}, 活动id🚩: ${data}`);
-					result=JSON.parse(data);
-						
-                  
-					playid=result.data.records[0].videoPublishId;
-					$.log("\n【视频ID】"+playid)
+                    if (logs) $.log(`${O}, 播放ID1🚩: ${data}`);
+                    $.playo = JSON.parse(data);
                 } catch (e) {
                     $.logErr(e, resp);
                 } finally {
                     resolve()
                 }
             })
+
+        }, timeout)
     })
 }
-
-//播放
-function play(i) {
+//视频o
+function videoo(timeout = 0) {
     return new Promise((resolve) => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-		do playTime = Math.floor(Math.random() * 31);
-        while (playTime < 20)
-        do playTimess = Math.floor(Math.random() * 36);
-        while (playTimess < 30)
+        setTimeout(() => {
+            var inss = 0;
 
-        header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
-        playbodyVal = `{"videoPublishId":"${playid}","playTimeLenght":${playTime},"type":1,"videoTime":${playTimess}}`;
-        videoPublishId = `${playid}`              
-        let url = {
-            url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/video/ignore_tk/v1/video_channel/uplaod_play_video_recode.json`,
-            headers: JSON.parse(header),
-            body: playbodyVal,
-        }
-        $.post(url, async (err, resp, data) => {
-            try {
-			//console.log(data)
-                if (logs) $.log(`${O}, 播放ID${i+1}🚩: ${data}`);
-                $.play = JSON.parse(data);
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
+            videobodyVal = `{"type":1,"videoList":[{"videoId":"${videoPublishId}","type":1,"isFinishWatch":false}],"actId":"${spid.actId}"}`
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: videobodyVal,
             }
-        })
+            $.post(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 视频🚩: ${data}`);
+                    $.videoo = JSON.parse(data);
+                    if ($.videoo.resultCode == 0) {
+                        LIVES = 2
+                        console.log('视频奖励：⚠️' + $.videoo.errorDesc + '\n');
+                        $.message += '【视频奖励】：⚠️' + $.videoo.errorDesc + '\n'
+                    }
+                    if ($.videoo.data && $.videoo.data.goldCoinNumber == 0) {
+                        LIVES = 2
+                        console.log(`视频奖励：恭喜您的账号已灰，已无法获取视频奖励\n`);
+                        $.message += `【视频奖励】：恭喜您的账号已灰，已无法获取视频奖励\n`
+                    }
+                    if ($.videoo.data && $.videoo.data.goldCoinNumber != 0) {
+                        LIVES = 0
+                        console.log(`开始领取第1次视频奖励，获得${$.videoo.data.goldCoinNumber}金币\n`);
+                        console.log(`视频奖励：共领取1次视频奖励，共${$.videoo.data.goldCoinNumber}金币\n`);
+                        $.message += `【视频奖励】：共领取1次视频奖励，共${$.videoo.data.goldCoinNumber}金币\n`
+                    }
+
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+
+
+
+
+        }, timeout)
+    })
+}
+//播放
+function play(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            for (let i = 0; i < CS; i++) {
+                setTimeout(() => {
+
+                    do playTime = Math.floor(Math.random() * 31);
+                    while (playTime < 20)
+                    do playTimess = Math.floor(Math.random() * 36);
+                    while (playTimess < 30)
+                    do playid = Math.floor(Math.random() * 49600000000000000);
+                    while (playid < 10000000000000000)
+                    playbodyVal = `{"videoPublishId":"13${playid}","playTimeLenght":${playTime},"type":1,"videoTime":${playTimess}}`;
+                    videoPublishId = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+                    if (i == 1) {
+                        videoPublishId3 = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+                    }
+                    if (i == 2) {
+                        videoPublishId4 = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+                    }
+                    if (i == 3) {
+                        videoPublishId5 = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+                    }
+                    if (i == 4) {
+                        videoPublishId6 = playbodyVal.substring(playbodyVal.indexOf("videoPublishId") + 17, playbodyVal.indexOf(`","pl`))
+                    }
+                    console.log(`视频ID${i+2}📍${videoPublishId}`)
+                    let url = {
+                        url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/video/ignore_tk/v1/video_channel/uplaod_play_video_recode.json`,
+                        headers: {
+                            "Connection": "keep-alive",
+                            "Accept-Encoding": "gzip, deflate, br",
+                            "version": "1.4.8",
+                            "mchtNo": "100529600058887",
+                            "Content-Type": "application/json; charset=utf-8",
+                            "source": "VEISHOP_APP_IOS",
+                            "shopkeeperId": "1148855820752977920",
+                            "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "token": `${TOKEN}`,
+                            "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "traceid": "30000000000000000000" + tts() + "000000000000",
+                            "Host": "veishop.iboxpay.com",
+                            "Accept-Language": "zh-Hans-CN;q=1",
+                            "Accept": "*/*"
+                        },
+                        body: playbodyVal,
+                    }
+                    $.post(url, async (err, resp, data) => {
+                        try {
+                            if (logs) $.log(`${O}, 播放ID${i+2}🚩: ${data}`);
+                            $.play = JSON.parse(data);
+                        } catch (e) {
+                            $.logErr(e, resp);
+                        } finally {
+                            resolve()
+                        }
+                    })
+                }, i * 30000);
+            }
+        }, timeout)
     })
 }
 //视频
-function video(i) {
+function video(timeout = 0) {
     return new Promise((resolve) => {
+        setTimeout(() => {
+            var inss = 0;
 
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-        header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
-        videobodyVal = `{"type":1,"videoList":[{"videoId":"${videoPublishId}","type":1,"isFinishWatch":false}],"actId":"${spid[0].actId}"}`
-        let url = {
-            url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
-            headers: JSON.parse(header),
-            body: videobodyVal,
+
+            for (let i = 0; i < CS; i++) {
+
+                setTimeout(() => {
+
+                    videobodyVal = `{"type":1,"videoList":[{"videoId":"${videoPublishId}","type":1,"isFinishWatch":false}],"actId":"${spid.actId}"}`
+                    let url = {
+                        url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
+                        headers: {
+                            "Connection": "keep-alive",
+                            "Accept-Encoding": "gzip, deflate, br",
+                            "version": "1.4.8",
+                            "mchtNo": "100529600058887",
+                            "Content-Type": "application/json; charset=utf-8",
+                            "source": "VEISHOP_APP_IOS",
+                            "shopkeeperId": "1148855820752977920",
+                            "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "token": `${TOKEN}`,
+                            "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "traceid": "30000000000000000000" + tts() + "000000000000",
+                            "Host": "veishop.iboxpay.com",
+                            "Accept-Language": "zh-Hans-CN;q=1",
+                            "Accept": "*/*"
+                        },
+                        body: videobodyVal,
+                    }
+                    $.post(url, async (err, resp, data) => {
+                        try {
+                            if (logs) $.log(`${O}, 视频🚩: ${data}`);
+                            $.video = JSON.parse(data);
+
+                            if ($.video.data && $.video.data.goldCoinNumber != 0) {
+                                console.log(`开始领取第${i+2}次视频奖励，获得${$.video.data.goldCoinNumber}金币\n`);
+                                inss += $.video.data.goldCoinNumber;
+                            }
+                        } catch (e) {
+                            $.logErr(e, resp);
+                        } finally {
+                            resolve()
+                        }
+                    })
+                }, i * 30000);
             }
-        $.post(url, async (err, resp, data) => {
-            try {
-
-                if (logs) $.log(`${O}, 视频🚩: ${data}`);
-                $.video = JSON.parse(data);
-                if ($.video.data && $.video.data.goldCoinNumber != 0) {
-                    console.log(`【视频奖励】${$.name+(i+1)}开始领取视频奖励，获得${$.video.data.goldCoinNumber}金币`);                      
+            setTimeout(() => {
+                if ($.video.resultCode == 0) {
+                    console.log('视频奖励：⚠️' + $.video.errorDesc + '\n');
+                    $.message += '【视频奖励】：⚠️' + $.video.errorDesc + '\n'
                 }
-				if ($.video.resultCode == 0) {
-					console.log('【视频奖励】⚠️' + $.video.errorDesc + '\n');								
-				}
-				if ($.video.data && $.video.data.goldCoinNumber == 0) {
-					console.log(`【视频奖励】${$.name+(i+1)}已灰，已无法获取视频奖励`);					
-				}
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
-            }
-        })
+                if ($.video.data && $.video.data.goldCoinNumber == 0) {
+                    console.log(`视频奖励：恭喜您的账号已灰，已无法获取视频奖励\n`);
+                    $.message += `【视频奖励】：恭喜您的账号已灰，已无法获取视频奖励\n`
+                }
+                if ($.video.data && $.video.data.goldCoinNumber != 0) {
+                    console.log(`视频奖励：共领取${CS}次视频奖励，共${inss}金币\n`);
+                    $.message += `【视频奖励】：共领取${CS}次视频奖励，共${inss}金币\n`
+                }
+            }, CS * 30000 - 29000)
+
+        }, timeout)
     })
 }
-
-
-//直播节目表
-function liveslist(i) {
+//金蛋视频
+function goldvideo(timeout = 40000) {
     return new Promise((resolve) => {
-       // setTimeout(() => {
+        setTimeout(() => {
 
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-                header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+            goldvideobodyVal = `{"type":2,"videoList":[{"videoId":"${videoPublishId3}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId4}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId5}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId6}","type":1,"isFinishWatch":false}],"actId":"${spid.actId}"}`
             let url = {
-                url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/live/ignore_tk/v1/query_living_list_id.json?size=60`,
-                headers: JSON.parse(header),
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: goldvideobodyVal,
+            }
+            $.post(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 金蛋视频🚩: ${data}`);
+                    $.goldvideo = JSON.parse(data);
+                    if ($.goldvideo.resultCode == 1) {
+                        console.log('金蛋视频奖励，获得' + $.goldvideo.data.goldCoinNumber + '金币')
+                        $.message +=
+                            '【金蛋视频奖励】：获得' + $.goldvideo.data.goldCoinNumber + '金币\n'
+                    }
+                    if ($.goldvideo.resultCode == 0) {
+                        console.log($.goldvideo.errorDesc + '\n');
+                        $.message +=
+                            '【金蛋视频奖励】：' + $.goldvideo.errorDesc + '\n';
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//新人福利
+function newvideo(timeout = 40000) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
+            newvideobodyVal = `{"videoList":[{"videoId":"${videoPublishId3}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId4}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId5}","type":1,"isFinishWatch":false},{"videoId":"${videoPublishId6}","type":1,"isFinishWatch":false}]}`
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_cash_by_video.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+                body: newvideobodyVal,
+            }
+            $.post(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 新人福利🚩: ${data}`);
+                    $.newvideo = JSON.parse(data);
+                    if ($.newvideo.resultCode == 1) {
+                        console.log('新人福利奖励，获得' + $.newvideo.data / 100 + '元\n')
+                        $.message +=
+                            '【新人福利奖励】：获得' + $.newvideo.data / 100 + '元\n'
+                    }
+                    if ($.newvideo.resultCode == 0) {
+                        console.log($.newvideo.errorDesc + '\n');
+                        $.message +=
+                            '【新人福利奖励】：' + $.newvideo.errorDesc + '\n';
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//直播节目表
+function liveslist(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
+
+
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_content_service/live/ignore_tk/v1/query_living_list_id.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
                     if (logs) $.log(`${O}, 直播节目表🚩: ${data}`);
                     $.liveslist = JSON.parse(data);
-                    if ($.liveslist.resultCode == 1) {
-                        liveId[i] = $.liveslist.data.liveIdList
-                        liveIdcd[i] = liveId[i].length
-
-                        console.log(`直播节目表，当前${liveIdcd[i]}个直播\n`);
+                    if ($.liveslist.resultCode == 1 && $.liveslist.data.liveIdList.length) {
+                        liveId = $.liveslist.data.liveIdList
+                        liveIdcd = liveId.length
                     }
+                    console.log(`直播节目表，当前${liveIdcd}个直播\n`);
+                    $.message += `【直播节目表】：当前${liveIdcd}个直播\n`
+
                     if ($.liveslist.resultCode == 0) {
                         console.log($.liveslist.errorDesc + '\n');
+                        $.message += '【直播节目表】：' + $.liveslist.errorDesc + '\n';
                     }
                 } catch (e) {
                     $.logErr(e, resp);
@@ -742,142 +1084,134 @@ function liveslist(i) {
                     resolve()
                 }
             })
-       // }, timeout)
+        }, timeout)
     })
 }
 //直播
-async function lives(j) {
-	Waittime=0;
-    for (let i = 0; i < Length; i++) { 
-		if(LiveTime[i]!=30)
-		{
-			IDNum=j;
-		    await singlelive(i);
-			Waittime=30000;
-		}
-		else
-		{
-			console.log(`【直播奖励】${$.name+(i+1)}达到直播上限`);
-		}	
-    }
-	await $.wait(Waittime);
-}
-
-
-
-function singlelive(i)
-{
+function lives(timeout = 0) {
     return new Promise((resolve) => {
+        setTimeout(() => {
+            var ins = 0;
+            for (let i = 0; i < liveIdcd; i++) {
+                $.index = i + 1
+                do RT = Math.floor(Math.random() * 35000);
+                while (RT < 30000)
+                setTimeout(() => {
 
-                       iboxpayheaderVal = iboxpayheaderArr[i];
-                       refreshtokenVal = refreshTokenID[i];
-                       traceid = iboxpayheaderVal["traceid"];
-                       token = iboxpayheaderVal["token"];
-                       oldtime = traceid.substr(traceid.indexOf("161"), 13);
-                       O = (`${$.name + (i + 1)}🔔`);
-                               header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
-                       livesbodyVal = `{
-    "actId": "${zbid[0].actId}",
-    "liveId": "${liveId[0][`${IDNum}`]}"
-   }`
+                    livesbodyVal = `{
+ "actId": "${zbid.actId}",
+ "liveId": "${liveId[i]}"
+}`
+                    let url = {
+                        url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_redbag_by_live.json`,
+                        headers: {
+                            "Connection": "keep-alive",
+                            "Accept-Encoding": "gzip, deflate, br",
+                            "version": "1.4.8",
+                            "mchtNo": "100529600058887",
+                            "Content-Type": "application/json; charset=utf-8",
+                            "source": "VEISHOP_APP_IOS",
+                            "shopkeeperId": "1148855820752977920",
+                            "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "token": `${TOKEN}`,
+                            "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                            "traceid": "30000000000000000000" + tts() + "000000000000",
+                            "Host": "veishop.iboxpay.com",
+                            "Accept-Language": "zh-Hans-CN;q=1",
+                            "Accept": "*/*"
+                        },
+                        body: livesbodyVal,
+                    }
+                    $.post(url, async (err, resp, data) => {
+                        try {
+                            if (logs) $.log(`${O}, 直播🚩: ${data}`);
+                            $.lives = JSON.parse(data);
 
-   
-                       let url = {
-                           url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_redbag_by_live.json`,
-                           
-                           headers: JSON.parse(header),
-                           body: livesbodyVal,
-                       }
-                       $.post(url, async (err, resp, data) => {
-                           try {
-                               if (logs) $.log(`${O}, 直播🚩: ${data}`);
-                               $.lives = JSON.parse(data);
-   
-                               if ($.lives.resultCode == 1) {
-            
-								    console.log(`【直播奖励】${$.name+(i+1)}开始领取第${parseInt(`${IDNum}`)+1}次直播奖励，获得${$.lives.data.goldCoinAmt}金币,等待${RT/1000}秒继续`);  
-                                   
-                               }
-                               if ($.lives.resultCode == 0) {
-                             
-								   console.log(`【直播奖励】${$.name+(i+1)}开始领取第${parseInt(`${IDNum}`)+1}次直播奖励，${$.lives.errorDesc},等待${RT/1000}秒继续`); 
-                                  
-                               }
-                           } catch (e) {
-                               $.logErr(e, resp);
-                           } finally {
-                               resolve()
-                           }
-                       })
-   
+                            if ($.lives.resultCode == 1) {
+                                ins += $.lives.data.goldCoinAmt;
+                                console.log(`开始领取第${i+1}次直播奖励，获得${$.lives.data.goldCoinAmt}金币,等待${RT/1000}秒继续\n`);
 
-       })
+                            }
+                            if ($.lives.resultCode == 0) {
+                                console.log(`开始领取第${i+1}次直播奖励，${$.lives.errorDesc},等待${RT/1000}秒继续\n`);
+                            }
+                        } catch (e) {
+                            $.logErr(e, resp);
+                        } finally {
+                            resolve()
+                        }
+                    })
 
+                }, i * RT);
 
-
-
-
-
-
-
-
-
-
+            }
+            setTimeout(() => {
+                console.log(`直播奖励：共领取${ins/500}次直播奖励，共${ins}金币\n`);
+                $.message += `【直播奖励】：共领取${ins/500}次直播奖励，共${ins}金币\n`
+            }, liveIdcd * 35000 - 34000)
+        }, timeout)
+    })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 //收益列表
-function sylist(i) {
+function sylist(timeout = 0) {
     return new Promise((resolve) => {
-       // setTimeout(() => {
-        iboxpayheaderVal = iboxpayheaderArr[i];
-        refreshtokenVal = refreshTokenID[i];
-        traceid = iboxpayheaderVal["traceid"];
-        token = iboxpayheaderVal["token"];
-        oldtime = traceid.substr(traceid.indexOf("161"), 13);
-        O = (`${$.name + (i + 1)}🔔`);
-                header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
-            let url = {  
-				url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/list_gold_coin.json?source=WX_APP_KA_HTZP&date=&actTypeId=0&size=600`,
-				headers: JSON.parse(header),
+        setTimeout(() => {
+
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/list_gold_coin.json?source=WX_APP_KA_HTZP&date=${ddtime}&actTypeId=0&size=800`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
             }
             $.get(url, async (err, resp, data) => {
                 try {
-					//$.log(data)
                     if (logs) $.log(`${O}, 收益列表🚩: ${data}`);
                     $.sylist = JSON.parse(data);
-                    if ($.sylist.resultCode == 1 ) {
-						if(ddtime==$.sylist.data[0].obtainDate)
-						{
-							live = JSON.stringify($.sylist.data[0]).match(/:500,/g);
-							if(live==null)
-								LiveTime[i]=0;
-							else
-								LiveTime[i] = live.length;
-							console.log('【直播明细】今日已获得直播奖励 ' + LiveTime[i] + ' 次，共' + LiveTime[i] * 500 + '金币\n')	
-						}
-						else
-						{
-							LiveTime[i] = 0;
-							console.log('【直播明细】今日已获得直播奖励 ' + LiveTime[i] + ' 次，共' + LiveTime[i] * 500 + '金币\n')
-						}
-								
-                        
-                    }
+
+                    if ($.sylist.resultCode == 1 && data.match(/"actTypeId":11,/g)) {
+                        hby = data.match(/"actTypeId":11,/g);
+                        hbycs = hby.length;
+                    } else hbycs = 0
+
+                    if ($.sylist.resultCode == 1 && data.match(/"actTypeId":10,/g)) {
+                        live = data.match(/"actTypeId":10,/g);
+                        livecs = live.length;
+                    } else livecs = 0
+
+                    if ($.sylist.resultCode == 1 && data.match(/"actTypeId":9,/g)) {
+
+                        videos = data.match(/"actTypeId":9,/g);
+                        videoscs = videos.length;
+                    } else videoscs = 0;
+
+                    spsy = $.goldcoin.data.coinSum - livecs * 500
+                    console.log('已获得红包雨奖励 ' + hbycs + ' 次\n')
+                    $.message +=
+                        '【红包雨收益】：已获得红包雨奖励 ' + hbycs + ' 次\n'
+                    console.log('已获得直播奖励 ' + livecs + ' 次，共' + livecs * 500 + '金币\n')
+                    $.message +=
+                        '【直播收益】：已获得直播奖励 ' + livecs + ' 次，共' + livecs * 500 + '金币\n'
+                    console.log('已获得视频奖励 ' + videoscs + ' 次，共' + spsy + '金币\n')
+                    $.message +=
+                        '【视频收益】：已获得视频奖励 ' + videoscs + ' 次，共' + spsy + '金币\n'
+
                     if ($.sylist.resultCode == 0) {
                         console.log($.sylist.errorDesc + '\n');
-                      
+                        $.message +=
+                            '【收益列表】：' + $.sylist.errorDesc + '\n';
                     }
                 } catch (e) {
                     $.logErr(e, resp);
@@ -885,30 +1219,175 @@ function sylist(i) {
                     resolve()
                 }
             })
-      //  }, timeout)
+        }, timeout)
     })
 }
-
-
-//提现
-function withdraw(i) {
+//视频上限  
+function splimit(timeout = 0) {
     return new Promise((resolve) => {
-        //setTimeout(() => {
-            iboxpayheaderVal = iboxpayheaderArr[i];
-            refreshtokenVal = refreshTokenID[i];
-            traceid = iboxpayheaderVal["traceid"];
-            token = iboxpayheaderVal["token"];
-            oldtime = traceid.substr(traceid.indexOf("161"), 13);
-            O = (`${$.name + (i + 1)}🔔`);
-            header = JSON.stringify(iboxpayheaderVal).replace(`${token}`, `${TOKEN[i]}`).replace(`${oldtime}`, `${tts()}`)
+        setTimeout(() => {
+
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/ignore_tk/v1/get_video_act.json`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+            }
+            $.get(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 视频上限🚩: ${data}`);
+                    $.splimit = JSON.parse(data);
+                    if ($.splimit.resultCode == 1) {
+                        console.log('视频上限：今日上限' + $.splimit.data.goldCoinDayLimit + '金币,今日未得' + ($.splimit.data.goldCoinDayLimit - spsy) + '金币\n');
+                        $.message += '【视频上限】：今日上限' + $.splimit.data.goldCoinDayLimit + '金币,今日未得' + ($.splimit.data.goldCoinDayLimit - spsy) + '金币\n';
+                    }
+                    if ($.splimit.data.isUperLimit == true) {
+                        console.log('视频上限：今日达到上限\n');
+                        $.message += '【视频上限】：今日达到上限\n';
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//提现记录
+function newcashlist(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/in_out.json?source=WX_APP_KA_HTZP&date=&tradeType=0&current=1&size=40`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+            }
+            $.get(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 提现记录🚩: ${data}`);
+                    $.newcashlist = JSON.parse(data);
+                    if ($.newcashlist.resultCode == 1 && data.match(/新人福利/g)) {
+                        newcashcs = $.newcashlist.data.records.find(item => item.tradeTypeName === "新人福利")
+                    }
+                    if ($.newcashlist.resultCode == 0) {
+                        console.log($.newcashlist.errorDesc + '\n');
+                        $.message +=
+                            '【新人福利】：' + $.newcashlist.errorDesc + '\n';
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//今日提现记录
+function cashlist(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
+            let url = {
+                url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/in_out.json?source=WX_APP_KA_HTZP&date=${ddtime}&tradeType=0&current=1&size=40`,
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
+            }
+            $.get(url, async (err, resp, data) => {
+                try {
+                    if (logs) $.log(`${O}, 今日提现记录🚩: ${data}`);
+                    $.cashlist = JSON.parse(data);
+                    if ($.cashlist.resultCode == 1 && data.match(/提现/g)) {
+                        cashcs = $.cashlist.data.records.find(item => item.tradeTypeName === "提现")
+                        console.log('今日已提现' + cashcs.amount / 100 + '元\n')
+                        $.message +=
+                            '【提现查询】：今日已提现' + cashcs.amount / 100 + '元\n'
+                    }
+                    if ($.cashlist.resultCode == 0) {
+                        console.log($.cashlist.errorDesc + '\n');
+                        $.message +=
+                            '【提现查询】：' + $.cashlist.errorDesc + '\n';
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            })
+        }, timeout)
+    })
+}
+//提现
+function withdraw(timeout = 0) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+
             withdrawbodyVal = `{
-                "source": "WX_APP_KA_HTZP",
-                "bizType": 2,
-                "amount": ${CASH[i]*100}
-            }`
+ "source": "WX_APP_KA_HTZP",
+ "bizType": 2,
+ "amount": ${CASH*100}
+}`
             let url = {
                 url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/activity/v1/withdraw.json`,
-                headers: JSON.parse(header),
+                headers: {
+                    "Connection": "keep-alive",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "version": "1.4.8",
+                    "mchtNo": "100529600058887",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "source": "VEISHOP_APP_IOS",
+                    "shopkeeperId": "1148855820752977920",
+                    "User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "token": `${TOKEN}`,
+                    "X-User-Agent": "VeiShop, 1.4.8 (iOS, 14.2, zh_CN, Apple, iPhone, )",
+                    "traceid": "30000000000000000000" + tts() + "000000000000",
+                    "Host": "veishop.iboxpay.com",
+                    "Accept-Language": "zh-Hans-CN;q=1",
+                    "Accept": "*/*"
+                },
                 body: withdrawbodyVal,
             }
             $.post(url, async (err, resp, data) => {
@@ -916,13 +1395,14 @@ function withdraw(i) {
                     if (logs) $.log(`${O}, 提现🚩: ${data}`);
                     $.withdraw = JSON.parse(data);
                     if ($.withdraw.resultCode == 1 && $.withdraw.data.withdrawRes == 1) {
-                        console.log('【余额提现】成功提现 ' + CASH[i] + ' 元')      
-                    }
-                    if ($.withdraw.resultCode == 1 && $.withdraw.data.withdrawRes == 2) {
-                        console.log('【余额提现】'+$.withdraw.data.remark)      
+                        console.log('成功提现 ' + CASH + ' 元\n')
+                        $.message +=
+                            '【余额提现】：成功提现 ' + CASH + ' 元\n'
                     }
                     if ($.withdraw.resultCode == 0) {
-                        console.log('【余额提现】'+$.withdraw.errorDesc);
+                        console.log($.withdraw.errorDesc + '\n');
+                        $.message +=
+                            '【余额提现】：' + $.withdraw.errorDesc + '\n';
                     }
                 } catch (e) {
                     $.logErr(e, resp);
@@ -930,7 +1410,7 @@ function withdraw(i) {
                     resolve()
                 }
             })
-       // }, timeout)
+        }, timeout)
     })
 }
 // prettier-ignore
