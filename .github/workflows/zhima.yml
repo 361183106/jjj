@@ -1,4 +1,4 @@
-name: 芝麻
+名字: 芝麻提现
 
 on:
   workflow_dispatch:
