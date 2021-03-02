@@ -1,4 +1,4 @@
-name: 【sheep zhuan】
+名字: 【综合任务】
 on:
   workflow_dispatch:
   watch:
@@ -25,8 +25,8 @@ jobs:
           npm install request
           curl ipinfo.io/json
 
-      - name: '【羊毛赚】'
+      - name: '【书旗小说】'
         run: |
-          cd ~/jjj   
-          node Task/ymz.js
+          cd ~/js   
+          node Task/sqxs.js
  
