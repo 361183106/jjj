@@ -1,4 +1,4 @@
-名字: 芝麻提现
+name: 芝麻tx
 
 on:
   workflow_dispatch:
@@ -20,6 +20,6 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - 名字: '运行 【芝麻提现】'   
+      - name: '运行 【芝麻】'   
         run: |
           node Task/zhima.js
