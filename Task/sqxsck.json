@@ -6,15 +6,15 @@
     "settings": [{
             "id": "sqxs",
             "name": "当前账号",
-            "val": "3",
+            "val": "4",
             "type": "number",
-            "desc": "3"
+            "desc": "4"
         }, {
             "id": "CountNumber",
-            "name": "3",
-            "val": "3",
+            "name": "4",
+            "val": "4",
             "type": "number",
-            "desc": "3"
+            "desc": "4"
         }
     ],
     "repo": "https://raw.githubusercontent.com/",
