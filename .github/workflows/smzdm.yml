@@ -1,0 +1,26 @@
+name: SMZDM
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '1 */8 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest       
+    steps:
+      
+      - name: Checkout
+        run: |
+          git clone https://github.com/361183106/jjj.git ~/jjj
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: npm install
+        run: |
+          npm install
+          npm install cron
+          npm install request
+          curl ipinfo.io/json
+      - name: '【SMZDM】'
+        run: |
+          node smzdm_mission.js
