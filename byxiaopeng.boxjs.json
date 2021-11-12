@@ -1,6 +1,6 @@
 {
     "id": "byxiaopeng.app.sub",
-    "name": "byxiaopeng脚本订阅",
+    "name": "byxiaopeng脚本订阅（改多账号）",
     "author": "@byxiaopeng",
     "icon": "https://avatars.githubusercontent.com/u/23413134?s=460",
     "repo": "https://github.com/byxiaopeng/myscripts",
@@ -36,7 +36,7 @@
     },{
         "id": "xgapp",
         "name": "鑫广APP",
-        "keys": ["xgPhone","xgPhone2"],
+        "keys": ["xgPhone","xgPhone2","xgPhone3","xgPhone4","xgPhone5","xgPhone6"],
         "settings": [{
             "id": "xgcount",
             "name": "账号个数",
