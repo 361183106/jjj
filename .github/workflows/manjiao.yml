@@ -6,7 +6,7 @@ name: 云扫码
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 12,14,16,20,22 * * *'
+    - cron: '15 8-22 * * *'
   watch:
     types: started
 
@@ -23,9 +23,10 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【云扫码】'
+      - name: '运行 【慢脚】'
         run: |
-          node ./Task/ysm.js
+          node ./Task/test1.js
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          ksjsbCookie: ${{ secrets.ksjsbCookie }}
